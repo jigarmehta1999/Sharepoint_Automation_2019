@@ -2,19 +2,19 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2019-10-22T16:00:29Z" name="Suite" finished-at="2019-10-22T16:01:27Z" duration-ms="57822">
+  <suite started-at="2019-10-23T08:06:51Z" name="Suite" finished-at="2019-10-23T08:08:00Z" duration-ms="69215">
     <groups>
       <group name="cucumber">
         <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleEventWrapper, io.cucumber.testng.CucumberFeatureWrapper)[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test started-at="2019-10-22T16:00:29Z" name="Test1" finished-at="2019-10-22T16:01:27Z" duration-ms="57822">
+    <test started-at="2019-10-23T08:06:51Z" name="Test1" finished-at="2019-10-23T08:08:00Z" duration-ms="69215">
       <class name="com.sharepoint.qa.runner.MyTestNgRunnerTest">
-        <test-method is-config="true" signature="setUpClass()[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" started-at="2019-10-22T16:00:29Z" name="setUpClass" finished-at="2019-10-22T16:00:29Z" duration-ms="262" status="PASS">
+        <test-method is-config="true" signature="setUpClass()[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" started-at="2019-10-23T08:06:51Z" name="setUpClass" finished-at="2019-10-23T08:06:51Z" duration-ms="252" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleEventWrapper, io.cucumber.testng.CucumberFeatureWrapper)[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" started-at="2019-10-22T16:00:29Z" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2019-10-22T16:01:26Z" duration-ms="57280" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleEventWrapper, io.cucumber.testng.CucumberFeatureWrapper)[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" started-at="2019-10-23T08:06:51Z" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2019-10-23T08:08:00Z" duration-ms="68718" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -30,7 +30,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" started-at="2019-10-22T16:01:26Z" name="tearDownClass" finished-at="2019-10-22T16:01:27Z" duration-ms="152" status="PASS">
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:com.sharepoint.qa.runner.MyTestNgRunnerTest@152aa092]" started-at="2019-10-23T08:08:00Z" name="tearDownClass" finished-at="2019-10-23T08:08:00Z" duration-ms="148" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
