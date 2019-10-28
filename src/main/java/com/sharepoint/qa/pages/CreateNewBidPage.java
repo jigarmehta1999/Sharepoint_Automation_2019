@@ -18,21 +18,14 @@ import com.sharepoint.webdriver.WebConnnector;
 
 //import com.sharepoint.qa.base.TestBase;
 
-public class CreateNewBidPage extends TestBase{
+public class CreateNewBidPage extends TestBase {
 
 //	WebConnnector con;
-	
-	@FindBy(xpath = "//*[@class='ms-standardheader']/nobr")
-	List<WebElement> ListLabels;
 
-	// Title value should be "New Document Set: Create New Bid"
-	@FindBy(xpath="//h1[@id='dialogTitleSpan']")
-	WebElement DialogTitle;
+	@FindBy(xpath = "//input[@title='Name Required Field']")
+	WebElement Name;
 
-	@FindBy(xpath = "//input[@title='CRM ID Required Field']")
-	WebElement CRMID;
-
-	@FindBy(xpath = "//input[@title='Bid Title Required Field']")
+	@FindBy(xpath = "//input[@title='Bid Title']")
 	WebElement BidTitle;
 
 	@FindBy(xpath = "//input[@title='Client Name Required Field']")
@@ -41,16 +34,16 @@ public class CreateNewBidPage extends TestBase{
 	@FindBy(xpath = "//select[@title='Bid Event Type Required Field']")
 	WebElement BidEventType;
 
+	@FindBy(xpath = "//select[@id='DropdownNr1']")
+	WebElement BidManager;
+
+	@FindBy(xpath = "//select[@id='DropdownNr2']")
+	WebElement SalesLead;
+
 	@FindBy(xpath = "//input[@title='Submission Date Required Field']")
 	WebElement SubmissonDate;
 
-	@FindBy(xpath = "(//span[@dir='none']/select)[2]")
-	WebElement BidManager;
-
-	@FindBy(xpath = "(//span[@dir='none']/select)[3]")
-	WebElement SalesLead;
-
-	@FindBy(xpath = "(//span[@dir='none']/select)[4]")
+	@FindBy(xpath = "//select[@title='Sensitivity level Required Field']")
 	WebElement SensitivityLevel;
 
 	@FindBy(xpath = "//textarea[@title='Notes']")
@@ -62,71 +55,75 @@ public class CreateNewBidPage extends TestBase{
 	@FindBy(xpath = "//textarea[@title='Submission instructions Required Field']")
 	WebElement SubmissionInstructions;
 
-//	@FindBy(xpath = "//input[@value='OK']")
-	@FindBy(css="input[value=OK]")
-	WebElement OK;
+	@FindBy(xpath = "//input[@title='CRM ID']")
+	WebElement CRMID;
+
+	@FindBy(xpath = "//input[@value='Save']")
+	WebElement Save;
 
 	@FindBy(xpath = "//input[@value='Cancel']")
 	WebElement Cancel;
-	
-	@FindBy(xpath="//td[@valign='top']")
-	List<WebElement> tdelements;
-	
-	@FindBy(xpath="(//img[@class='ms-dlgCloseBtnImg']/..)[2]")
-	WebElement CloseButton;
-	
-	public void clickCloseButton() {
-		CloseButton.click();
-	}
-	
+
+//	driver.findElement(By.xpath("//input[@title='Name Required Field']")).sendKeys("Name1");
+//	driver.findElement(By.xpath("//input[@title='Bid Title']")).sendKeys("Bid Title 1");
+//	driver.findElement(By.xpath("//input[@title='Client Name Required Field']")).sendKeys("Client Name 1");
+
+//	Select bideventtype = new Select(driver.findElement(By.xpath("//select[@title='Bid Event Type Required Field']")));
+//	bideventtype.selectByVisibleText("BAFO");
+
+//	Select bidmanager = new Select(driver.findElement(By.xpath("//select[@id='DropdownNr1']")));
+//	bidmanager.selectByVisibleText("Charlotte Scott");
+
+//	Select saleslead = new Select(driver.findElement(By.xpath("//select[@id='DropdownNr2']")));
+//	saleslead.selectByVisibleText("Alan Campbell");
+
+//	driver.findElement(By.xpath("//input[@title='Submission Date Required Field']")).sendKeys("25/09/2019");;
+
+//	Select sensitivitylevel = new Select(driver.findElement(By.xpath("//select[@title='Sensitivity level Required Field']")));
+//	sensitivitylevel.selectByVisibleText("Restricted Access");
+
+//	driver.findElement(By.xpath("//textarea[@title='Notes']")).sendKeys("Notes 1");
+
+//	driver.findElement(By.xpath("//textarea[@title='Security clearance requirements Required Field']")).sendKeys("Security clearance requirements 1");
+
+//	driver.findElement(By.xpath("//textarea[@title='Submission instructions Required Field']")).sendKeys("Submission instructions 1");
+
+//	driver.findElement(By.xpath("//input[@title='CRM ID']")).sendKeys("CRMID1 ");
+
 	public CreateNewBidPage() {
 		PageFactory.initElements(driver, this);
 	}
 
-	public boolean isCRMIDTextBoxDisplayed() {
-		//return (CRMID.isDisplayed());
-		return(driver.findElement(By.xpath("//input[@title='CRM ID Required Field']")).isDisplayed());
+	public boolean isNameTextBoxDisplayed() {
+		return (Name.isDisplayed());
 	}
 
-	public boolean isCRMIDTextBoxEnabled() {
-		//return (CRMID.isEnabled());
-		return(driver.findElement(By.xpath("//input[@title='CRM ID Required Field']")).isEnabled());
+	public boolean isNameTextBoxEnabled() {
+		return (Name.isEnabled());
 	}
 
 	public boolean isBidTitleTextBoxDisplayed() {
-		//return (BidTitle.isDisplayed());
-		return(driver.findElement(By.xpath("//input[@title='Bid Title Required Field']")).isDisplayed());
+		return (BidTitle.isDisplayed());
 	}
 
 	public boolean isBidTitleTextBoxEnabled() {
-		//return (BidTitle.isEnabled());
-		return(driver.findElement(By.xpath("//input[@title='Bid Title Required Field']")).isEnabled());
+		return (BidTitle.isEnabled());
 	}
 
 	public boolean isClientNameTextBoxDisplayed() {
-		//return (ClientName.isDisplayed());
-		return(driver.findElement(By.xpath("//input[@title='Client Name Required Field']")).isDisplayed());
+		return (ClientName.isDisplayed());
 	}
 
 	public boolean isClientNameTextBoxEnabled() {
-		//return (ClientName.isEnabled());
-		return(driver.findElement(By.xpath("//input[@title='Client Name Required Field']")).isEnabled());
+		return (ClientName.isEnabled());
 	}
 
-	public boolean isBidEventTypeTextBoxDisplayed() {
+	public boolean isBidEventTypeDropDownBoxDisplayed() {
 		return (BidEventType.isDisplayed());
 	}
 
-	public boolean isBidEventTypeTextBoxEnabled() {
+	public boolean isBidEventTypeDropDownBoxEnabled() {
 		return (BidEventType.isEnabled());
-	}
-
-	public boolean isSubmissionDateFieldDisplayed() {
-		return (SubmissonDate.isDisplayed());
-	}
-
-	public boolean isSubmissionDateFieldEnabled() {
-		return (SubmissonDate.isEnabled());
 	}
 
 	public boolean isBidManagerDropDownDisplayed() {
@@ -143,6 +140,14 @@ public class CreateNewBidPage extends TestBase{
 
 	public boolean isSalesLeadDropDownEnabled() {
 		return (SalesLead.isEnabled());
+	}
+
+	public boolean isSubmissionDateFieldDisplayed() {
+		return (SubmissonDate.isDisplayed());
+	}
+
+	public boolean isSubmissionDateFieldEnabled() {
+		return (SubmissonDate.isEnabled());
 	}
 
 	public boolean isSensitivityLevelDropDownDisplayed() {
@@ -177,12 +182,20 @@ public class CreateNewBidPage extends TestBase{
 		return (SubmissionInstructions.isEnabled());
 	}
 
-	public boolean isOKButtonDisplayed() {
-		return (OK.isDisplayed());
+	public boolean isCRMIDTextDisplayed() {
+		return (CRMID.isDisplayed());
 	}
 
-	public boolean isOKButtonEnabled() {
-		return (OK.isEnabled());
+	public boolean isCRMIDTextEnabled() {
+		return (CRMID.isEnabled());
+	}
+
+	public boolean isSaveButtonDisplayed() {
+		return (Save.isDisplayed());
+	}
+
+	public boolean isSaveButtonEnabled() {
+		return (Save.isEnabled());
 	}
 
 	public boolean isCancelButtonDisplayed() {
@@ -193,46 +206,25 @@ public class CreateNewBidPage extends TestBase{
 		return (Cancel.isEnabled());
 	}
 
-	public void clickOKButton() {
+	public void clickSaveButton() {
 		try {
-			OK.click();
-		} catch (StaleElementReferenceException  e) {
+			Save.click();
+		} catch (StaleElementReferenceException e) {
 			System.out.println("StaleElementReferenceException occured while clicking Ok button...");
 			e.printStackTrace();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Exception occured while clicking Ok button...");
 		}
-		
+
 	}
 
 	public void clickCancelButton() {
 		Cancel.click();
 	}
 
-	public void setCRMIDText(String CRM_ID) throws InterruptedException {
-		CRMID.sendKeys(CRM_ID);
+	public void setName(String Name) throws InterruptedException {
+		this.CRMID.sendKeys(Name);
 		Thread.sleep(500);
-	}
-
-	public List<WebElement> getTdElements() {
-		return tdelements;
-	}
-	
-	public ArrayList<String> getCreateNewBidLabels() throws InterruptedException {
-		ArrayList<String> arrayLabels = new ArrayList<String>();
-		for (int i = 0; i < ListLabels.size(); i++) {
-			arrayLabels.add(ListLabels.get(i).getText());
-		}
-		return arrayLabels;
-	}
-
-	public String setCRMID() throws InterruptedException {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
-		LocalDateTime now = LocalDateTime.now();
-		String formattedLocalDateTime = dtf.format(now);
-		this.CRMID.sendKeys(formattedLocalDateTime);
-		Thread.sleep(500);
-		return formattedLocalDateTime;
 	}
 
 	public void setBidTitle(String BidTitle) throws InterruptedException {
@@ -250,8 +242,22 @@ public class CreateNewBidPage extends TestBase{
 		Thread.sleep(500);
 	}
 
+	public void setBidManager(String BidManager) throws InterruptedException {
+		Select bidmanager = new Select(this.BidManager);
+		bidmanager.selectByVisibleText(BidManager);
+		Thread.sleep(500);
+		// this.BidManager.sendKeys(BidManager);
+	}
+
+	public void setSalesLead(String SalesLead) throws InterruptedException {
+		Select saleslead = new Select(this.SalesLead);
+		saleslead.selectByVisibleText(SalesLead);
+		// this.SalesLead.sendKeys(SalesLead);
+		Thread.sleep(500);
+	}
+
 	public String setSubmissonDate() throws InterruptedException {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDateTime now = LocalDateTime.now();
 		String formattedLocalDate = dtf.format(now);
 		this.SubmissonDate.sendKeys(formattedLocalDate);
@@ -259,24 +265,10 @@ public class CreateNewBidPage extends TestBase{
 		return formattedLocalDate;
 	}
 
-	public void setBidManager(String BidManager) throws InterruptedException {
-		Select bidmanager = new Select(this.BidManager);
-		bidmanager.selectByVisibleText(BidManager);
-		Thread.sleep(500);
-		//this.BidManager.sendKeys(BidManager);
-	}
-
-	public void setSalesLead(String SalesLead) throws InterruptedException {
-		Select saleslead = new Select(this.SalesLead);
-		saleslead.selectByVisibleText(SalesLead);
-	//	this.SalesLead.sendKeys(SalesLead);
-		Thread.sleep(500);
-	}
-
 	public void setSensitivityLevel(String SensitivityLevel) throws InterruptedException {
 		Select senstivitylevel = new Select(this.SensitivityLevel);
 		senstivitylevel.selectByVisibleText(SensitivityLevel);
-	//	this.SensitivityLevel.sendKeys(SensitivityLevel);
+		// this.SensitivityLevel.sendKeys(SensitivityLevel);
 		Thread.sleep(500);
 	}
 
@@ -295,9 +287,31 @@ public class CreateNewBidPage extends TestBase{
 		Thread.sleep(500);
 	}
 
-	public String getDialogTitle() {
-		//return(DialogTitle.getAttribute("title").trim());
-		return(DialogTitle.getText().trim());
+	public String setCRMID() throws InterruptedException {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		LocalDateTime now = LocalDateTime.now();
+		String formattedLocalDateTime = dtf.format(now);
+		this.CRMID.sendKeys(formattedLocalDateTime);
+		Thread.sleep(500);
+		return formattedLocalDateTime;
 	}
 
+	/*
+	 * public void setCRMIDText(String CRM_ID) throws InterruptedException {
+	 * CRMID.sendKeys(CRM_ID); Thread.sleep(500); }
+	 */
+
+	/*
+	 * public List<WebElement> getTdElements() { return tdelements; }
+	 * 
+	 * public ArrayList<String> getCreateNewBidLabels() throws InterruptedException
+	 * { ArrayList<String> arrayLabels = new ArrayList<String>(); for (int i = 0; i
+	 * < ListLabels.size(); i++) { arrayLabels.add(ListLabels.get(i).getText()); }
+	 * return arrayLabels; }
+	 * 
+	 * 
+	 * public String getDialogTitle() {
+	 * //return(DialogTitle.getAttribute("title").trim());
+	 * return(DialogTitle.getText().trim()); }
+	 */
 }

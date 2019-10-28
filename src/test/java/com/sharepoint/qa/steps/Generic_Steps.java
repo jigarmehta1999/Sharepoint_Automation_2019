@@ -2,30 +2,31 @@ package com.sharepoint.qa.steps;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.Status;
 import com.sharepoint.qa.base.TestBase;
-import com.sharepoint.qa.pages.BidOperationsPage;
+
 import com.sharepoint.qa.pages.CreateNewBidPage;
+import com.sharepoint.qa.pages.HomePage;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 public class Generic_Steps extends TestBase {
 
-	BidOperationsPage bidoperationspage;
+	HomePage homepage;
 	CreateNewBidPage createnewbidpage;
 
 	SoftAssert sa;
 
-	@Then("Create new bids with values (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*)")
-	public void create_new_bids(String BidTitle, String ClientName, String BidEventType, String BidManager,
-			String SalesLead, String SensitivityLevel, String Notes, String SecurityClearanceRequirements,
+	@Then("Create new bids with values (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*)")
+	public void create_new_bids(String Name, String BidTitle, String ClientName, String BidEventType,
+			String BidManager, String SalesLead, String SensitivityLevel, String Notes, String SecurityClearanceRequirements,
 			String SubmissionInstructions) throws InterruptedException {
+		System.out.println("Name = " + Name);
 		System.out.println("BidTitle = " + BidTitle);
 		System.out.println("ClientName = " + ClientName);
 		System.out.println("BidEventType = " + BidEventType);
@@ -39,14 +40,15 @@ public class Generic_Steps extends TestBase {
 		System.out.println();
 
 //		TestBase.initialization();
-		bidoperationspage = new BidOperationsPage();
+//		homepage = new HomePage();
 		createnewbidpage = new CreateNewBidPage();
-		sa = new SoftAssert();
+//		sa = new SoftAssert();
 //		test = rep.createTest("Testing CreateNewBid");
 
 		test.log(Status.INFO, "Browser used: " + prop.get("browser"));
 
-		String CRMID = createnewbidpage.setCRMID();
+		
+/*		String CRMID = createnewbidpage.setCRMID();
 		test.log(Status.INFO, "CRMID = " + CRMID);
 
 		createnewbidpage.setBidTitle(BidTitle);
@@ -119,7 +121,7 @@ public class Generic_Steps extends TestBase {
 		}
 
 		System.out.println("bidcreated = " + bidcreated);
-		sa.assertTrue(bidcreated);
+		sa.assertTrue(bidcreated); */
 		rep.flush();
 		sa.assertAll();
 
@@ -127,27 +129,24 @@ public class Generic_Steps extends TestBase {
 
 	@Given("I have logged into sharepoint")
 	public void i_have_logged_into_sharepoint() throws InterruptedException {
-		TestBase.initialization();
-		BidOperationsPage bidoperationspage = new BidOperationsPage();
+		TestBase.initialization();		
+		HomePage homepage = new HomePage();
 
 		sa = new SoftAssert();
-		test = rep.createTest("Testing isCreateNewBidPageFieldsDisplayedAndEnabled");
+		test = rep.createTest("Testing...");
 
-		String expectedtitle = "Bid List - StandardSecurityView";
-		String actualtitle = bidoperationspage.getPageTitle().trim();
+		String expectedtitle = "Home";
+		String actualtitle = homepage.getPageTitle();
 
 		System.out.println("actualtitle = " + actualtitle);
-		sa.assertEquals(actualtitle, "Bid List - StandardSecurityView");
+		sa.assertEquals(actualtitle, expectedtitle);
 
-//		Thread.sleep(8000);
-//		bidoperationspage.clickCreateNewBid();
-
-		test.log(Status.INFO, "Expected title = " + "Bid List - StandardSecurityView");
+		test.log(Status.INFO, "Expected title = " + expectedtitle);
 		test.log(Status.INFO, "Actual title = " + actualtitle);
 		if (expectedtitle.equals(actualtitle)) {
-			test.log(Status.PASS, "Expected and Actual title is a mactch");
+			test.log(Status.PASS, "Expected and Actual title is a match");
 		} else {
-			test.log(Status.FAIL, "Expected and Actual title does NOT mactch");
+			test.log(Status.FAIL, "Expected and Actual title does NOT match");
 		}
 
 //		sa.assertAll();
@@ -156,28 +155,25 @@ public class Generic_Steps extends TestBase {
 	@Given("I click on Create New bid button")
 	public void i_click_on_button() throws InterruptedException {
 		Thread.sleep(8000);
-		BidOperationsPage bidoperationspage = new BidOperationsPage();
-		CreateNewBidPage createnewbidpage = new CreateNewBidPage();
+		HomePage homepage = new HomePage();
+		
+		test.log(Status.INFO, "Browser used: " + prop.get("browser"));
 
-		bidoperationspage.clickCreateNewBid();
-		bidoperationspage.switchToCreateNewBidFrame();
-//		Thread.sleep(4000);
-//		String actualdialogtitle = createnewbidpage.getDialogTitle();
-//		System.out.println("actualdialogtitle = " + actualdialogtitle);
-//		sa.assertEquals(actualdialogtitle.trim(), "New Document Set: Create New Bid");
-//		sa.assertAll();
+		homepage.clickBidListMenu();
+		homepage.clickNew();
+		homepage.clickCreateNewBidButton();
 	}
 
 	@Then("^Validate the required input Fields are visible and enabled in Create New Bid dialog$")
 	public void validate_the_required_input_Fields_are_visible_and_enabled() {
 		CreateNewBidPage createnewbidpage = new CreateNewBidPage();
 
-		if (createnewbidpage.isCRMIDTextBoxDisplayed()) {
+		if (createnewbidpage.isNameTextBoxDisplayed()) {
 			test.log(Status.PASS, "CRM ID TextBox is Displayed");
 		} else {
 			test.log(Status.FAIL, "CRM ID TextBox is NOT Displayed");
 		}
-		if (createnewbidpage.isCRMIDTextBoxEnabled()) {
+		if (createnewbidpage.isNameTextBoxEnabled()) {
 			test.log(Status.PASS, "CRM ID TextBox is Enabled");
 		} else {
 			test.log(Status.FAIL, "CRM ID TextBox is NOT Enabled");
@@ -205,15 +201,37 @@ public class Generic_Steps extends TestBase {
 			test.log(Status.FAIL, "Client Name TextBox is NOT Enabled");
 		}
 
-		if (createnewbidpage.isBidEventTypeTextBoxDisplayed()) {
-			test.log(Status.PASS, "Bid Event Type TextBox is Displayed");
+		if (createnewbidpage.isBidEventTypeDropDownBoxDisplayed()) {
+			test.log(Status.PASS, "Bid Event Type is Displayed");
 		} else {
-			test.log(Status.FAIL, "Bid Event Type TextBox is NOT Displayed");
+			test.log(Status.FAIL, "Bid Event Type is NOT Displayed");
 		}
-		if (createnewbidpage.isBidEventTypeTextBoxEnabled()) {
-			test.log(Status.PASS, "Bid Event Type TextBox is Enabled");
+		if (createnewbidpage.isBidEventTypeDropDownBoxEnabled()) {
+			test.log(Status.PASS, "Bid Event Type is Enabled");
 		} else {
-			test.log(Status.FAIL, "Bid Event Type TextBox is NOT Enabled");
+			test.log(Status.FAIL, "Bid Event Type is NOT Enabled");
+		}
+		
+		if (createnewbidpage.isBidManagerDropDownDisplayed()) {
+			test.log(Status.PASS, "Bid Manager DropDown is Displayed");
+		} else {
+			test.log(Status.FAIL, "Bid Manager DropDown is NOT Displayed");
+		}
+		if (createnewbidpage.isBidManagerDropDownEnabled()) {
+			test.log(Status.PASS, "Bid Manager DropDown is Enabled");
+		} else {
+			test.log(Status.FAIL, "Bid Manager DropDown is NOT Enabled");
+		}
+		
+		if (createnewbidpage.isSalesLeadDropDownDisplayed()) {
+			test.log(Status.PASS, "Sales Lead DropDown is Displayed");
+		} else {
+			test.log(Status.FAIL, "Sales Lead DropDown is NOT Displayed");
+		}
+		if (createnewbidpage.isSalesLeadDropDownEnabled()) {
+			test.log(Status.PASS, "Sales Lead DropDown is Enabled");
+		} else {
+			test.log(Status.FAIL, "Sales Lead DropDown is NOT Enabled");
 		}
 
 		if (createnewbidpage.isSubmissionDateFieldDisplayed()) {
@@ -225,28 +243,6 @@ public class Generic_Steps extends TestBase {
 			test.log(Status.PASS, "Submission Date Field is Enabled");
 		} else {
 			test.log(Status.FAIL, "Submission Date Field is NOT Enabled");
-		}
-
-		if (createnewbidpage.isBidManagerDropDownDisplayed()) {
-			test.log(Status.PASS, "Bid Manager DropDown is Displayed");
-		} else {
-			test.log(Status.FAIL, "Bid Manager DropDown is NOT Displayed");
-		}
-		if (createnewbidpage.isBidManagerDropDownEnabled()) {
-			test.log(Status.PASS, "Bid Manager DropDown is Enabled");
-		} else {
-			test.log(Status.FAIL, "Bid Manager DropDown is NOT Enabled");
-		}
-
-		if (createnewbidpage.isSalesLeadDropDownDisplayed()) {
-			test.log(Status.PASS, "Sales Lead DropDown is Displayed");
-		} else {
-			test.log(Status.FAIL, "Sales Lead DropDown is NOT Displayed");
-		}
-		if (createnewbidpage.isSalesLeadDropDownEnabled()) {
-			test.log(Status.PASS, "Sales Lead DropDown is Enabled");
-		} else {
-			test.log(Status.FAIL, "Sales Lead DropDown is NOT Enabled");
 		}
 
 		if (createnewbidpage.isSensitivityLevelDropDownDisplayed()) {
@@ -293,15 +289,15 @@ public class Generic_Steps extends TestBase {
 			test.log(Status.FAIL, "Submission Instructions Text is NOT Enabled");
 		}
 
-		if (createnewbidpage.isOKButtonDisplayed()) {
-			test.log(Status.PASS, "OK Button is Displayed");
+		if (createnewbidpage.isSaveButtonDisplayed()) {
+			test.log(Status.PASS, "Save Button is Displayed");
 		} else {
-			test.log(Status.FAIL, "OK Button is NOT Displayed");
+			test.log(Status.FAIL, "Save Button is NOT Displayed");
 		}
-		if (createnewbidpage.isOKButtonEnabled()) {
-			test.log(Status.PASS, "OK Button is Enabled");
+		if (createnewbidpage.isSaveButtonEnabled()) {
+			test.log(Status.PASS, "Save Button is Enabled");
 		} else {
-			test.log(Status.FAIL, "OK Button is NOT Enabled");
+			test.log(Status.FAIL, "Save Button is NOT Enabled");
 		}
 
 		if (createnewbidpage.isCancelButtonDisplayed()) {
@@ -315,8 +311,8 @@ public class Generic_Steps extends TestBase {
 			test.log(Status.FAIL, "Cancel Button is NOT Enabled");
 		}
 
-		sa.assertTrue(createnewbidpage.isCRMIDTextBoxDisplayed());
-		sa.assertTrue(createnewbidpage.isCRMIDTextBoxEnabled());
+		sa.assertTrue(createnewbidpage.isNameTextBoxDisplayed());
+		sa.assertTrue(createnewbidpage.isNameTextBoxEnabled());
 
 		sa.assertTrue(createnewbidpage.isBidTitleTextBoxDisplayed());
 		sa.assertTrue(createnewbidpage.isBidTitleTextBoxEnabled());
@@ -324,17 +320,17 @@ public class Generic_Steps extends TestBase {
 		sa.assertTrue(createnewbidpage.isClientNameTextBoxDisplayed());
 		sa.assertTrue(createnewbidpage.isClientNameTextBoxEnabled());
 
-		sa.assertTrue(createnewbidpage.isBidEventTypeTextBoxDisplayed());
-		sa.assertTrue(createnewbidpage.isBidEventTypeTextBoxEnabled());
-
-		sa.assertTrue(createnewbidpage.isSubmissionDateFieldDisplayed());
-		sa.assertTrue(createnewbidpage.isSubmissionDateFieldEnabled());
+		sa.assertTrue(createnewbidpage.isBidEventTypeDropDownBoxDisplayed());
+		sa.assertTrue(createnewbidpage.isBidEventTypeDropDownBoxEnabled());
 
 		sa.assertTrue(createnewbidpage.isBidManagerDropDownDisplayed());
 		sa.assertTrue(createnewbidpage.isBidManagerDropDownEnabled());
-
+		
 		sa.assertTrue(createnewbidpage.isSalesLeadDropDownDisplayed());
 		sa.assertTrue(createnewbidpage.isSalesLeadDropDownEnabled());
+		
+		sa.assertTrue(createnewbidpage.isSubmissionDateFieldDisplayed());
+		sa.assertTrue(createnewbidpage.isSubmissionDateFieldEnabled());
 
 		sa.assertTrue(createnewbidpage.isSensitivityLevelDropDownDisplayed());
 		sa.assertTrue(createnewbidpage.isSensitivityLevelDropDownEnabled());
@@ -348,12 +344,16 @@ public class Generic_Steps extends TestBase {
 		sa.assertTrue(createnewbidpage.isSubmissionInstructionsTextDisplayed());
 		sa.assertTrue(createnewbidpage.isSubmissionInstructionsTextEnabled());
 
-		sa.assertTrue(createnewbidpage.isOKButtonDisplayed());
-		sa.assertTrue(createnewbidpage.isOKButtonEnabled());
+		sa.assertTrue(createnewbidpage.isCRMIDTextDisplayed());
+		sa.assertTrue(createnewbidpage.isCRMIDTextEnabled());
+		
+		sa.assertTrue(createnewbidpage.isSaveButtonDisplayed());
+		sa.assertTrue(createnewbidpage.isSaveButtonEnabled());
 
 		sa.assertTrue(createnewbidpage.isCancelButtonDisplayed());
 		sa.assertTrue(createnewbidpage.isCancelButtonEnabled());
 
+		rep.flush();
 		sa.assertAll();
 
 	}

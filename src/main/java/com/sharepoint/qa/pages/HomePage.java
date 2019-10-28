@@ -17,9 +17,15 @@ import com.sharepoint.webdriver.WebConnnector;
 
 //import com.sharepoint.qa.base.TestBase;
 
-public class BidOperationsPage extends TestBase{
+public class HomePage extends TestBase{
 	
-	@FindBy(xpath = "//a[@title='Create New Bid']")
+	@FindBy(xpath = "//a[@title='Bid List']")
+	WebElement BidListMenu;
+	
+	@FindBy(className="CommandBarItem-commandText")
+	List<WebElement> CommandBarItems;
+	
+	@FindBy(xpath = "//span[contains(text(),'Create New Bid')]")
 	WebElement CreateNewBid;
 	
 //	@FindBy(xpath = "//a[@title='Create New Bid']")
@@ -29,13 +35,29 @@ public class BidOperationsPage extends TestBase{
 	@FindBy(xpath = "//iframe[@class='ms-dlgFrame']")
 	WebElement CreateNewBidFrame;
 
-	public BidOperationsPage() {
+	public HomePage() {
 		PageFactory.initElements(driver, this);
 	}
 
 	
-	public void clickCreateNewBid() {
+	public void clickBidListMenu() throws InterruptedException {
+		BidListMenu.click();
+		Thread.sleep(10000);
+	}
+	
+	public void clickNew() throws InterruptedException {
+		for (int i = 0; i < CommandBarItems.size(); i++) {
+			System.out.println(CommandBarItems.get(i).getText());
+			if(CommandBarItems.get(i).getText().trim().equals("New")) {
+				CommandBarItems.get(i).click();
+			}
+		}
+		Thread.sleep(5000);
+	}
+	
+	public void clickCreateNewBidButton() throws InterruptedException {
 		CreateNewBid.click();
+		Thread.sleep(20000);
 	}
 	
 	public void switchToCreateNewBidFrame() {
@@ -43,6 +65,6 @@ public class BidOperationsPage extends TestBase{
 	}
 	
 	public String getPageTitle() {
-		return driver.getTitle();
+		return (driver.getTitle().trim());
 	}
 }

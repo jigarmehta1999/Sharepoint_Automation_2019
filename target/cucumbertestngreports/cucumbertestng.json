@@ -3,7 +3,7 @@
     "line": 1,
     "elements": [
       {
-        "line": 3,
+        "line": 5,
         "name": "",
         "description": "",
         "type": "background",
@@ -11,10 +11,10 @@
         "steps": [
           {
             "result": {
-              "duration": 13490950050,
+              "duration": 31751406860,
               "status": "passed"
             },
-            "line": 4,
+            "line": 6,
             "name": "I have logged into sharepoint",
             "match": {
               "location": "Generic_Steps.i_have_logged_into_sharepoint()"
@@ -24,20 +24,20 @@
         ]
       },
       {
-        "start_timestamp": "2019-10-23T08:06:52.274Z",
-        "line": 11,
-        "name": "Create New bids",
+        "start_timestamp": "2019-10-23T16:06:37.440Z",
+        "line": 8,
+        "name": "Verifying inputs fields",
         "description": "",
-        "id": "verify-user-is-able-to-create-a-new-bid;create-new-bids;;2",
+        "id": "verify-inputs-fields-on-create-new-bid-dialog-are-visible-and-enabled;verifying-inputs-fields",
         "type": "scenario",
-        "keyword": "Scenario Outline",
+        "keyword": "Scenario",
         "steps": [
           {
             "result": {
-              "duration": 12593262372,
+              "duration": 59855023062,
               "status": "passed"
             },
-            "line": 7,
+            "line": 9,
             "name": "I click on Create New bid button",
             "match": {
               "location": "Generic_Steps.i_click_on_button()"
@@ -46,62 +46,24 @@
           },
           {
             "result": {
-              "duration": 42266215340,
+              "duration": 13293587945,
               "status": "passed"
             },
-            "line": 8,
-            "name": "Create new bids with values Bid Title 1 and British Telecom1 and BAFO1 and Jigar Mehta and Jigar Mehta and Standard Security and Notes1 and SecurityClearanceRequirements and SubmissionInstructions1",
+            "line": 10,
+            "name": "Validate the required input Fields are visible and enabled in Create New Bid dialog",
             "match": {
-              "arguments": [
-                {
-                  "val": "Bid Title 1",
-                  "offset": 28
-                },
-                {
-                  "val": "British Telecom1",
-                  "offset": 44
-                },
-                {
-                  "val": "BAFO1",
-                  "offset": 65
-                },
-                {
-                  "val": "Jigar Mehta",
-                  "offset": 75
-                },
-                {
-                  "val": "Jigar Mehta",
-                  "offset": 91
-                },
-                {
-                  "val": "Standard Security",
-                  "offset": 107
-                },
-                {
-                  "val": "Notes1",
-                  "offset": 129
-                },
-                {
-                  "val": "SecurityClearanceRequirements",
-                  "offset": 140
-                },
-                {
-                  "val": "SubmissionInstructions1",
-                  "offset": 174
-                }
-              ],
-              "location": "Generic_Steps.create_new_bids(String,String,String,String,String,String,String,String,String)"
+              "location": "Generic_Steps.validate_the_required_input_Fields_are_visible_and_enabled()"
             },
             "keyword": "Then "
           }
         ]
       }
     ],
-    "name": "Verify user is able to create a new bid",
-    "description": "",
-    "id": "verify-user-is-able-to-create-a-new-bid",
+    "name": "Verify inputs fields on Create New Bid dialog are visible and enabled",
+    "description": "\tAs a user who wants to create a new bid\n\tI want to verify if the given fields are visible and enabled",
+    "id": "verify-inputs-fields-on-create-new-bid-dialog-are-visible-and-enabled",
     "keyword": "Feature",
-    "uri": "file:src/test/resources/com/sharepoint/qa/features/NewBid.feature",
+    "uri": "file:src/test/resources/com/sharepoint/qa/features/CreateNewBidFieldVerification.feature",
     "tags": []
   }
 ]
