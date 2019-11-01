@@ -3,6 +3,7 @@ package com.sharepoint.qa.steps;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.testng.asserts.SoftAssert;
 
@@ -22,11 +23,11 @@ public class Generic_Steps extends TestBase {
 
 	SoftAssert sa;
 
-	@Then("Create new bids with values (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*)")
-	public void create_new_bids(String Name, String BidTitle, String ClientName, String BidEventType,
+	@Then("Create new bids with values (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*)")
+	public void create_new_bids(String BidTitle, String ClientName, String BidEventType,
 			String BidManager, String SalesLead, String SensitivityLevel, String Notes, String SecurityClearanceRequirements,
 			String SubmissionInstructions) throws InterruptedException {
-		System.out.println("Name = " + Name);
+	//	System.out.println("Name = " + Name);
 		System.out.println("BidTitle = " + BidTitle);
 		System.out.println("ClientName = " + ClientName);
 		System.out.println("BidEventType = " + BidEventType);
@@ -39,89 +40,115 @@ public class Generic_Steps extends TestBase {
 		System.out.println();
 		System.out.println();
 
-//		TestBase.initialization();
-//		homepage = new HomePage();
 		createnewbidpage = new CreateNewBidPage();
-//		sa = new SoftAssert();
-//		test = rep.createTest("Testing CreateNewBid");
+//		test.log(Status.INFO, "Browser used: " + prop.get("browser"));
 
-		test.log(Status.INFO, "Browser used: " + prop.get("browser"));
-
+//		createnewbidpage.setName(Name);
+//		test.log(Status.INFO, " Expected Name = " + Name);
 		
-/*		String CRMID = createnewbidpage.setCRMID();
-		test.log(Status.INFO, "CRMID = " + CRMID);
-
 		createnewbidpage.setBidTitle(BidTitle);
-		test.log(Status.INFO, "BidTitle = " + BidTitle);
-
+		test.log(Status.INFO, "Expected BidTitle = " + BidTitle);
+		
 		createnewbidpage.setClientName(ClientName);
-		test.log(Status.INFO, "ClientName = " + ClientName);
-
+		test.log(Status.INFO, "Expected ClientName = " + ClientName);
+		
 		createnewbidpage.setBidEventType(BidEventType);
-		test.log(Status.INFO, "BidEventType = " + BidEventType);
-
-		String actualsubmissiondate = createnewbidpage.setSubmissonDate();
-		test.log(Status.INFO, "Submission Date = " + actualsubmissiondate);
-
+		test.log(Status.INFO, "Expected BidEventType = " + BidEventType);
+		
 		createnewbidpage.setBidManager(BidManager);
-		test.log(Status.INFO, "BidManager = " + BidManager);
-
+		test.log(Status.INFO, "Expected BidManager = " + BidManager);
+		
 		createnewbidpage.setSalesLead(SalesLead);
-		test.log(Status.INFO, "SalesLead = " + SalesLead);
-
+		test.log(Status.INFO, "Expected SalesLead = " + SalesLead);
+		
+		String SubmissonDate = createnewbidpage.setSubmissonDate();
+		test.log(Status.INFO, "Expected Submisson Date = " + SubmissonDate);
+		
 		createnewbidpage.setSensitivityLevel(SensitivityLevel);
-		test.log(Status.INFO, "SensitivityLevel = " + SensitivityLevel);
-
+		test.log(Status.INFO, "Expected SensitivityLevel = " + SensitivityLevel);
+		
 		createnewbidpage.setNotes(Notes);
-		test.log(Status.INFO, "Notes = " + Notes);
-
+		test.log(Status.INFO, "Expected Notes = " + Notes);
+		
 		createnewbidpage.setSecurityClearanceRequirements(SecurityClearanceRequirements);
-		test.log(Status.INFO, "SecurityClearanceRequirements = " + SecurityClearanceRequirements);
-
+		test.log(Status.INFO, "Expected SecurityClearanceRequirements = " + SecurityClearanceRequirements);
+		
 		createnewbidpage.setSubmissionInstructions(SubmissionInstructions);
-		test.log(Status.INFO, "SubmissionInstructions = " + SubmissionInstructions);
-
-		createnewbidpage.clickOKButton();
-
-		String url = prop.getProperty("url");
-		String[] temp = url.split("Forms/StandardSecurityView.aspx");
-		String bidlisturl = temp[0].concat(CRMID);
-
-		System.out.println("bidlisturl = " + bidlisturl);
-		boolean bidcreated = false;
-
-		HttpURLConnection huc = null;
-		try {
-			huc = (HttpURLConnection) (new URL(url).openConnection());
-			huc.setRequestMethod("HEAD");
-			huc.connect();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(Status.FAIL, "Bid creation is unsuccessful");
-			test.log(Status.INFO, "bidlisturl = " + bidlisturl);
-			sa.fail();
+		test.log(Status.INFO, "Expected SubmissionInstructions = " + SubmissionInstructions);
+		
+		String CRMID = createnewbidpage.setNameandCRMID();
+		test.log(Status.INFO, "Expected Name and CRMID = " + CRMID);
+		
+		createnewbidpage.clickSaveButton();
+		
+		ArrayList<String> FinalBidValues = createnewbidpage.getFinalBidValues();
+		
+		
+		String ActualClientName = FinalBidValues.get(0);
+		String ActualBidEventType= FinalBidValues.get(1);
+		String ActualSubmissonDate = FinalBidValues.get(2);
+		String ActualSensitivityLevel = FinalBidValues.get(3);
+		String ActualNotes = FinalBidValues.get(4);
+		String ActualSecurityClearanceRequirements = FinalBidValues.get(5);
+		String ActualSubmissionInstructions = FinalBidValues.get(6);
+		
+		
+		if (ActualClientName.equals(ClientName)) {
+			test.log(Status.INFO, "Actual ClientName = " + ActualClientName);
+			test.log(Status.PASS, "Expected and Actual Client Name matches");
+		}else {
+			test.log(Status.INFO, "Actual ClientName = " + ActualClientName);
+			test.log(Status.FAIL, "Expected and Actual Client Name does not match");
+		}
+		
+		if (ActualBidEventType.equals(BidEventType)) {
+			test.log(Status.INFO, "Actual ActualBidEventType = " + ActualBidEventType);
+			test.log(Status.PASS, "Expected and Actual BidEventType matches");
+		}else {
+			test.log(Status.INFO, "Actual ActualBidEventType = " + ActualBidEventType);
+			test.log(Status.FAIL, "Expected and Actual BidEventType does not match");
 		}
 
-		for (int i = 0; i < 20; i++) {
-			int responsecode = 0;
-			try {
-				responsecode = huc.getResponseCode();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("responsecode = " + responsecode);
-			if (responsecode == 200) {
-				System.out.println("i = " + i);
-				test.log(Status.PASS, "Bid creation is successful. Bid number " + CRMID);
-				test.log(Status.INFO, "Bid url = " + bidlisturl);
-				bidcreated = true;
-				break;
-			}
-			Thread.sleep(1000);
+		if (ActualSubmissonDate.equals(SubmissonDate)) {
+			test.log(Status.INFO, "Actual SubmissonDate = " + ActualSubmissonDate);
+			test.log(Status.PASS, "Expected and Actual SubmissonDate matches");
+		}else {
+			test.log(Status.INFO, "Actual SubmissonDate = " + ActualSubmissonDate);
+			test.log(Status.FAIL, "Expected and Actual SubmissonDate does not match");
 		}
-
-		System.out.println("bidcreated = " + bidcreated);
-		sa.assertTrue(bidcreated); */
+		
+		if (ActualSensitivityLevel.equals(SensitivityLevel)) {
+			test.log(Status.INFO, "Actual SensitivityLevel = " + ActualSensitivityLevel);
+			test.log(Status.PASS, "Expected and Actual SensitivityLevel matches");
+		}else {
+			test.log(Status.INFO, "Actual SensitivityLevel = " + ActualSensitivityLevel);
+			test.log(Status.FAIL, "Expected and Actual SensitivityLevel does not match");
+		}
+		
+		if (ActualNotes.equals(Notes)) {
+			test.log(Status.INFO, "Actual Notes = " + ActualNotes);
+			test.log(Status.PASS, "Expected and Actual Notes matches");
+		}else {
+			test.log(Status.INFO, "Actual Notes = " + ActualNotes);
+			test.log(Status.FAIL, "Expected and Actual Notes does not match");
+		}
+		
+		if (ActualSecurityClearanceRequirements.equals(SecurityClearanceRequirements)) {
+			test.log(Status.INFO, "Actual SecurityClearanceRequirements = " + ActualSecurityClearanceRequirements);
+			test.log(Status.PASS, "Expected and Actual SecurityClearanceRequirements matches");
+		}else {
+			test.log(Status.INFO, "Actual SecurityClearanceRequirements = " + ActualSecurityClearanceRequirements);
+			test.log(Status.FAIL, "Expected and Actual SecurityClearanceRequirements does not match");
+		}
+		
+		if (ActualSubmissionInstructions.equals(SubmissionInstructions)) {
+			test.log(Status.INFO, "Actual SubmissionInstructions = " + ActualSubmissionInstructions);
+			test.log(Status.PASS, "Expected and Actual SubmissionInstructions matches");
+		}else {
+			test.log(Status.INFO, "Actual SubmissionInstructions = " + ActualSubmissionInstructions);
+			test.log(Status.FAIL, "Expected and Actual SubmissionInstructions does not match");
+		}
+		
 		rep.flush();
 		sa.assertAll();
 
@@ -154,7 +181,7 @@ public class Generic_Steps extends TestBase {
 
 	@Given("I click on Create New bid button")
 	public void i_click_on_button() throws InterruptedException {
-		Thread.sleep(8000);
+
 		HomePage homepage = new HomePage();
 		
 		test.log(Status.INFO, "Browser used: " + prop.get("browser"));

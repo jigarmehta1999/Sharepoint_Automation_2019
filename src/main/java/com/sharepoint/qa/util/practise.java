@@ -4,11 +4,20 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.ProfilesIni;
 import org.openqa.selenium.support.ui.Select;
+
+import bsh.Capabilities;
 
 
 public class practise {
@@ -16,11 +25,27 @@ public class practise {
 	public static void main(String[] args) throws InterruptedException, MalformedURLException, IOException {
 	
 //		WebDriver driver = new InternetExplorerDriver();
-		WebDriver driver = new ChromeDriver();
+		
+		ProfilesIni profile = new ProfilesIni();
+		FirefoxProfile myprofile = profile.getProfile("Jigar");
+		FirefoxOptions options = new FirefoxOptions().setProfile(myprofile);
+		options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT);
+		WebDriver driver = new FirefoxDriver(options);
+		
 		driver.manage().window().maximize();
 		
 		driver.navigate().to("http://tc3-v-devsp06:9999/SitePages/Home.aspx");
+		Thread.sleep(5000);
+		try {
+			Alert alert = driver.switchTo().alert();
+			alert.accept();
+		} catch (Exception e) {
+			System.out.println("Error occured..........");
+			e.printStackTrace();
+		}
+
 		
+		Thread.sleep(15000);
 		driver.findElement(By.xpath("//a[@title='Bid List']")).click();
 		
 		Thread.sleep(10000);
@@ -28,7 +53,7 @@ public class practise {
 		List<WebElement> commandbaritems = driver.findElements(By.className("CommandBarItem-commandText"));
 		
 		for (int i = 0; i < commandbaritems.size(); i++) {
-			System.out.println(commandbaritems.get(i).getText());
+			System.out.println("i = " + i + " text = " + commandbaritems.get(i).getText());
 			if(commandbaritems.get(i).getText().trim().equals("New")) {
 				commandbaritems.get(i).click();
 			}

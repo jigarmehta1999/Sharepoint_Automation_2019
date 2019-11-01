@@ -11,7 +11,9 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.sharepoint.qa.base.TestBase;
 import com.sharepoint.webdriver.WebConnnector;
@@ -63,6 +65,9 @@ public class CreateNewBidPage extends TestBase {
 
 	@FindBy(xpath = "//input[@value='Cancel']")
 	WebElement Cancel;
+
+	@FindBy(xpath = "//td[@valign='top']/../td[3]")
+	List<WebElement> FinalBidValues;
 
 //	driver.findElement(By.xpath("//input[@title='Name Required Field']")).sendKeys("Name1");
 //	driver.findElement(By.xpath("//input[@title='Bid Title']")).sendKeys("Bid Title 1");
@@ -223,29 +228,41 @@ public class CreateNewBidPage extends TestBase {
 	}
 
 	public void setName(String Name) throws InterruptedException {
-		this.CRMID.sendKeys(Name);
-		Thread.sleep(500);
+		this.Name.sendKeys(Name);
+		Thread.sleep(2000);
 	}
 
 	public void setBidTitle(String BidTitle) throws InterruptedException {
-		this.BidTitle.sendKeys(BidTitle);
-		Thread.sleep(500);
+		Thread.sleep(5000);
+		System.out.println("BidTitle before typing = " + BidTitle);
+		for (int i = 0; i < BidTitle.length(); i++) {
+			char ch = BidTitle.charAt(i);
+			this.BidTitle.sendKeys(String.valueOf(ch));
+			Thread.sleep(500);
+		}
+//		this.BidTitle.sendKeys(BidTitle);
+//		Thread.sleep(2000);
 	}
 
 	public void setClientName(String ClientName) throws InterruptedException {
-		this.ClientName.sendKeys(ClientName);
-		Thread.sleep(500);
+		for (int i = 0; i < ClientName.length(); i++) {
+			char ch = ClientName.charAt(i);
+			this.ClientName.sendKeys(String.valueOf(ch));
+			Thread.sleep(500);
+		}
+//		this.ClientName.sendKeys(ClientName);
+//		Thread.sleep(2000);
 	}
 
 	public void setBidEventType(String BidEventType) throws InterruptedException {
 		this.BidEventType.sendKeys(BidEventType);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 	}
 
 	public void setBidManager(String BidManager) throws InterruptedException {
 		Select bidmanager = new Select(this.BidManager);
 		bidmanager.selectByVisibleText(BidManager);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 		// this.BidManager.sendKeys(BidManager);
 	}
 
@@ -253,7 +270,7 @@ public class CreateNewBidPage extends TestBase {
 		Select saleslead = new Select(this.SalesLead);
 		saleslead.selectByVisibleText(SalesLead);
 		// this.SalesLead.sendKeys(SalesLead);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 	}
 
 	public String setSubmissonDate() throws InterruptedException {
@@ -261,7 +278,7 @@ public class CreateNewBidPage extends TestBase {
 		LocalDateTime now = LocalDateTime.now();
 		String formattedLocalDate = dtf.format(now);
 		this.SubmissonDate.sendKeys(formattedLocalDate);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 		return formattedLocalDate;
 	}
 
@@ -269,49 +286,43 @@ public class CreateNewBidPage extends TestBase {
 		Select senstivitylevel = new Select(this.SensitivityLevel);
 		senstivitylevel.selectByVisibleText(SensitivityLevel);
 		// this.SensitivityLevel.sendKeys(SensitivityLevel);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 	}
 
 	public void setNotes(String Notes) throws InterruptedException {
 		this.Notes.sendKeys(Notes);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 	}
 
 	public void setSecurityClearanceRequirements(String SecurityClearanceRequirements) throws InterruptedException {
 		this.SecurityClearanceRequirements.sendKeys(SecurityClearanceRequirements);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 	}
 
 	public void setSubmissionInstructions(String SubmissionInstructions) throws InterruptedException {
 		this.SubmissionInstructions.sendKeys(SubmissionInstructions);
-		Thread.sleep(500);
+		Thread.sleep(2000);
 	}
 
-	public String setCRMID() throws InterruptedException {
+	public String setNameandCRMID() throws InterruptedException {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		LocalDateTime now = LocalDateTime.now();
 		String formattedLocalDateTime = dtf.format(now);
 		this.CRMID.sendKeys(formattedLocalDateTime);
-		Thread.sleep(500);
+		this.Name.sendKeys(formattedLocalDateTime);
+		Thread.sleep(2000);
 		return formattedLocalDateTime;
 	}
+	
+	public ArrayList<String> getFinalBidValues() {
+		ArrayList<String> temp = new ArrayList<String>();
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(FinalBidValues.get(0)));
+		
+		for (int i = 0; i < FinalBidValues.size(); i++) {
+			temp.add(FinalBidValues.get(i).getText());
+		}
+		return temp;
+	}
 
-	/*
-	 * public void setCRMIDText(String CRM_ID) throws InterruptedException {
-	 * CRMID.sendKeys(CRM_ID); Thread.sleep(500); }
-	 */
-
-	/*
-	 * public List<WebElement> getTdElements() { return tdelements; }
-	 * 
-	 * public ArrayList<String> getCreateNewBidLabels() throws InterruptedException
-	 * { ArrayList<String> arrayLabels = new ArrayList<String>(); for (int i = 0; i
-	 * < ListLabels.size(); i++) { arrayLabels.add(ListLabels.get(i).getText()); }
-	 * return arrayLabels; }
-	 * 
-	 * 
-	 * public String getDialogTitle() {
-	 * //return(DialogTitle.getAttribute("title").trim());
-	 * return(DialogTitle.getText().trim()); }
-	 */
 }
